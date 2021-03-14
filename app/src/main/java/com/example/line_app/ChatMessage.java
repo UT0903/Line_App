@@ -16,7 +16,7 @@ public class ChatMessage {
         this.message = message;
         this.time = time;
     }
-
+    public ChatMessage() {}
     public String getMessage() {
         return message;
     }

@@ -24,6 +24,7 @@
                 android:layout_alignParentRight="true" />
 
             <TextView
+
                 android:id="@+id/my_msg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -37,7 +38,8 @@
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:paddingLeft="23dp"
-                android:paddingRight="33dp" />
+                android:paddingRight="33dp"
+                />
         </RelativeLayout>
 
         <RelativeLayout
@@ -49,7 +51,6 @@
                     android:id="@+id/other_img"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:onClick="showInfo"
                     android:src="@drawable/bear" />
                 <TextView
                     android:id="@+id/other_name"
@@ -61,7 +62,8 @@
                     android:text="name"
                     android:textColor="@color/black"
                     android:textStyle="normal|bold" />
-                <TextView
+
+            <TextView
                     android:id="@+id/other_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
