@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.paging.DatabasePagingOptions;
 import com.firebase.ui.database.paging.FirebaseRecyclerPagingAdapter;
@@ -55,9 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference dbRef;
     private RecyclerView recyclerView;
     private MessageAdapter adapter;
-    private int my_uid;
     private Toast toast;
-    private Query mQuery;
     private List<ChatMessage> msg_list;
     private LinearLayoutManager linearLayoutManager;
     ArrayList<String> keyList = new ArrayList<>();
@@ -66,19 +66,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        inputBox = findViewById(R.id.inputBox);
-        dbRef = FirebaseDatabase.getInstance().getReference();
-        mQuery = dbRef;
-        msg_list = new ArrayList<>();
-        adapter = new MessageAdapter(this,msg_list);
-        my_uid = 1;
-        recyclerView = findViewById(R.id.recyclerView);
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
-        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+        initInstance();
         dbRef.addChildEventListener(new ChildEventListener() {
             @Override//收到新訊息時自動往下捲
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -111,12 +99,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void initInstance(){
+        inputBox = findViewById(R.id.inputBox);
+        dbRef = FirebaseDatabase.getInstance().getReference();
+        msg_list = new ArrayList<>();
+        adapter = new MessageAdapter(this,msg_list);
+        recyclerView = findViewById(R.id.recyclerView);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+        startActivityForResult(new Intent(this, AuthActivity.class), 1);
+    }
     public void sendMsg(View view) {
-        //String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            return;
+        }
+        String userName = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
 
         String key = dbRef.push().getKey();
-        dbRef.child(key).setValue(new ChatMessage("Anthony", this.inputBox.getText().toString(), new Date().getTime(), my_uid));
+        dbRef.child(key).setValue(new ChatMessage(userName, this.inputBox.getText().toString(), new Date().getTime(), FirebaseAuth.getInstance().getCurrentUser().getUid()));
         this.inputBox.setText("");
         //Log.e("Main", msg);
     }

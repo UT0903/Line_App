@@ -4,17 +4,19 @@ public class ChatMessage {
     private String message;
     private long time;
     private String userName;
-    private int uid;
+    private String uid;
 
-    public ChatMessage(String userName, String message,long time, int uid) {
+    public ChatMessage(String userName, String message,long time, String uid) {
         this.userName = userName;
         this.message = message;
         this.time = time;
+        this.uid = uid;
     }
-    public ChatMessage(String userName, long time, int uid) {
+    public ChatMessage(String userName, long time, String uid) {
         this.userName = userName;
         this.message = message;
         this.time = time;
+        this.uid = uid;
     }
     public ChatMessage() {}
     public String getMessage() {
@@ -40,11 +42,11 @@ public class ChatMessage {
     public String getUserName() {
         return userName;
     }
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 

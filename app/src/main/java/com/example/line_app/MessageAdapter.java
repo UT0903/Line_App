@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatMessageHolder>{
@@ -73,7 +75,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ChatMess
                     other_layout.setVisibility(View.GONE);
                     my_layout.setVisibility(View.GONE);
                 } else {
-                    if (chatMessage.getUid() == my_uid) {
+                    if (!chatMessage.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
                         other_layout.setVisibility(View.VISIBLE);
                         other_img.setVisibility(View.VISIBLE);
                         other_name.setVisibility(View.VISIBLE);
