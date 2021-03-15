@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkLogin();
         initInstance();
+        checkLogin();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,24 +73,26 @@ public class MainActivity extends AppCompatActivity {
         if(FirebaseAuth.getInstance().getCurrentUser() == null){
             Log.e("NotLogin", "NotLogin");
             startActivityForResult(new Intent(this, AuthActivity.class), 1);
-
         }
         else {
             Log.e("IsLogin", "islogin");
+            setRecyclerView();
         }
     }
-    private void initInstance(){
-        inputBox = findViewById(R.id.inputBox);
-        dbRef = FirebaseDatabase.getInstance().getReference();
-        msg_list = new ArrayList<>();
-        adapter = new MessageAdapter(this,msg_list);
-        recyclerView = findViewById(R.id.recyclerView);
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
-        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
+    @Override//獲取登入結果
+    protected void onActivityResult(final int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == 1) {
+                Toast.makeText(this, "login success", Toast.LENGTH_SHORT).show();
+                setRecyclerView();
+            } else {
+                Toast.makeText(this, "login failed", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+    }
+    private void setRecyclerView(){
         dbRef.addChildEventListener(new ChildEventListener() {
             @Override//收到新訊息時自動往下捲
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -122,6 +124,19 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+    }
+    private void initInstance(){
+        inputBox = findViewById(R.id.inputBox);
+        dbRef = FirebaseDatabase.getInstance().getReference();
+        msg_list = new ArrayList<>();
+        adapter = new MessageAdapter(this,msg_list);
+        recyclerView = findViewById(R.id.recyclerView);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        recyclerView.scrollToPosition(adapter.getItemCount() - 1);
     }
     public void sendMsg(View view) {
         if(FirebaseAuth.getInstance().getCurrentUser() == null){

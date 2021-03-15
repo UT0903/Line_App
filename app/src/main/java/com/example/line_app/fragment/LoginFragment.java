@@ -1,6 +1,7 @@
 package com.example.line_app.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -65,6 +66,7 @@ public class LoginFragment extends Fragment {
                 .addOnCompleteListener((Activity) getContext(), task -> {
                     if (task.isSuccessful()) {
                         // Sign in is successful
+                        getActivity().setResult(1);
                         getActivity().finish();
                     } else {
                         Toast.makeText(getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();

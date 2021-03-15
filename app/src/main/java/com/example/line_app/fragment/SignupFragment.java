@@ -84,6 +84,7 @@ public class SignupFragment extends Fragment {
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
                                             Log.d("tag", "User profile updated.");
+                                            getActivity().setResult(1);
                                             getActivity().finish();
                                             //endLoading();
                                         }
