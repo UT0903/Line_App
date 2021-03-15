@@ -1,10 +1,13 @@
-package com.example.line_app;
+package com.example.line_app.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+
+import com.example.line_app.fragment.LoginFragment;
+import com.example.line_app.fragment.SignupFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     final int pageCount = 2;

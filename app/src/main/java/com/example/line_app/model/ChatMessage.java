@@ -1,4 +1,4 @@
-package com.example.line_app;
+package com.example.line_app.model;
 
 public class ChatMessage {
     private String message;

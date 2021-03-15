@@ -1,4 +1,4 @@
-package com.example.line_app;
+package com.example.line_app.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.line_app.R;
+import com.example.line_app.model.ChatMessage;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
