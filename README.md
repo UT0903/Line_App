@@ -9,8 +9,8 @@
   - Identify different users by its uuid in **Firebase Authentication**
 ## View of app
 - **Login page**
-![](https://i.imgur.com/duCd3Pa.png =250x)
+![](https://i.imgur.com/duCd3Pa.png)
 - **Sign up page**
-![](https://i.imgur.com/6VuCAL9.png =250x)
+![](https://i.imgur.com/6VuCAL9.png)
 - **Chat room page**
-![](https://i.imgur.com/GXOYTY4.png =250x)
+![](https://i.imgur.com/GXOYTY4.png)
